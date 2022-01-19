@@ -1,26 +1,27 @@
 import React, {useEffect, useState, PropsWithRef} from 'react';
 import Wrapper from "./Wrapper";
-import {Link} from "react-router-dom";
 import {Event} from "../interfaces/event";
 
 const Events = (props: PropsWithRef<any>) => {
     var [tickets, setTickets] = useState([]);
     var [ticketsNumber, setTicketsNumber] = useState(0);
-    var [redeemedTickets, setRedeemedTickets] = useState(0)
+    var [redeemedTickets, setRedeemedTickets] = useState(0);
+    var [eventName, setEventName] = useState('');
     useEffect(() => {
         (
             async () => {
-                const response = await fetch(`http://localhost:5000/event/${props.match.params.id}`);
+                const response = await fetch(`http://127.0.0.1:5000/event/${props.match.params.id}`);
                 const data = await response.json();
                 setTickets(data['tickets']);
                 setTicketsNumber(data['tickets'].length)
                 setRedeemedTickets(data['tickets'].filter((obj: Event) => obj.reedeemed == true).length)
+                setEventName(data['name'])
             }
         )();
     }, []);
     
     const redeem = async (uuid: string) => {
-        await fetch(`http://localhost:5000/redeem/${props.match.params.id}?uuid=${uuid}`)
+        await fetch(`http://127.0.0.1:5000/redeem/${props.match.params.id}?uuid=${uuid}`)
             .then(response => response.json())
             .then(
                 function(data){
@@ -28,19 +29,9 @@ const Events = (props: PropsWithRef<any>) => {
                     setTickets(data)
                 }   
             )
-        //var objIndex = products.findIndex((obj: Event) => obj.uuid = uuid);
-        //remove
-        //setProducts(products.filter((p: Event) => p.uuid !== uuid))
-        //map
-        //var derp = products.map((p: Event) => p.uuid == uuid?p.reedeemed = true:p)
-        //find index
-        // var elementIndex = tickets.findIndex((p: Event) => p.uuid == uuid)
-        // var newTickets = [...tickets];
-        // console.log(newTickets[0]['reedeemed'])
     }
     const remove = async (uuid: string) => {
-        //await fetch(`http://localhost:5000/redeem?id=${props.match.params.id}&uuid=${uuid}`)
-        await fetch(`http://localhost:5000/deleteTicket/${props.match.params.id}?uuid=${uuid}`)
+        await fetch(`http://127.0.0.1:5000/deleteTicket/${props.match.params.id}?uuid=${uuid}`)
             .then(response => response.json())
             .then(
                 function(data) {
@@ -51,7 +42,7 @@ const Events = (props: PropsWithRef<any>) => {
             );
     }
     const reset = async (id: string) => {
-        await fetch(`http://localhost:5000/reset/${props.match.params.id}`)
+        await fetch(`http://127.0.0.1:5000/reset/${props.match.params.id}`)
             .then(response => response.json())
             .then(
                 function(data){
@@ -66,13 +57,13 @@ const Events = (props: PropsWithRef<any>) => {
                 <div className="btn-toolbar mb-2 mb-md-0">
                 <a href="#" onClick={() => reset(props.match.params.id)} className="btn btn-sm btn-outline-secondary">Reset</a>
                 </div>
-                {/*<h1>{tickets[props.match.params.id].owner_id}</h1> */}
+                <h1>{eventName}</h1>
             </div>
 
             <div className="table-responsive">
-                <h1>All TICKETS : {ticketsNumber}</h1>
-                <h1>REEDEEMED TICKETS : {redeemedTickets}</h1>
-                <h1>AVALIABLE TICKETS : {ticketsNumber - redeemedTickets}</h1>
+                <h3>All TICKETS : {ticketsNumber}</h3>
+                <h3>REEDEEMED TICKETS : {redeemedTickets}</h3>
+                <h3>AVALIABLE TICKETS : {ticketsNumber - redeemedTickets}</h3>
                 <table className="table table-striped table-sm">
                     <thead>
                     <tr>

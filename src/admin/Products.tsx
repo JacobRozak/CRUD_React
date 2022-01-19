@@ -17,7 +17,7 @@ const Products = () => {
 
     const remove = async (id: number) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            await fetch(`http://localhost:5000/delete/${id}`)
+            await fetch(`http://127.0.0.1:5000/delete/${id}`)
             setProducts(products.filter((p: Product) => p.id !== id));
         }
     }
@@ -49,7 +49,7 @@ const Products = () => {
                                     <td>{p.id}</td>
                                     <td><img src="https://pyxis.nymag.com/v1/imgs/806/ec8/05638100340c7ebb8b14b799d46956ea14-28-fyre-fest.2x.h473.w710.jpg" height="180"/></td>
                                     <td><Link to={`/event/${p.id}`}>{p.name}</Link></td>
-                                    <td></td>
+                                    <td>{p.date_created}</td>
                                     <td>
                                         <div className="btn-group mr-2">
                                             <Link to={`/edit/${p.id}`}

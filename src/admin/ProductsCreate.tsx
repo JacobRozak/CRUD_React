@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 
 const ProductsCreate = () => {
     const [name, setName] = useState('');
+    const [date, setDate] = useState('');
     const [tickets, setTickets] = useState(0);
     const [redirect, setRedirect] = useState(false);
 
@@ -15,7 +16,8 @@ const ProductsCreate = () => {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     name:name,
-                    amount:tickets
+                    amount:tickets,
+                    date:date
                 })
             });
         }
@@ -39,6 +41,12 @@ const ProductsCreate = () => {
                     <label>Number of tickets</label>
                     <input type="number" className="form-control" name="image"
                         onChange={e => setTickets(parseInt(e.target.value))}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Date</label>
+                    <input type="date" className="form-control" name="image"
+                        onChange={e => setDate(e.target.value)}
                     />
                 </div>
                 <button className="btn btn-outline-secondary">Save</button>
