@@ -1,4 +1,4 @@
-#front-end for the Ticketing App
+# front-end for the Ticketing App
 
 must be run with  https://github.com/JacobRozak/CRUD_Flask backend running
 
