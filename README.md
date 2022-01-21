@@ -1,3 +1,5 @@
+#front-end for the Ticketing App
+
 must be run with  https://github.com/JacobRozak/CRUD_Flask backend running
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
